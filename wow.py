@@ -25,7 +25,7 @@ uploaded_file = st.sidebar.file_uploader("Choose a file")
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
 else:
-    df = pd.read_csv('clean_data.csv')
+    df = pd.read_csv('clean_data.csv')###change path
 
 ##layout
 options = st.sidebar.radio('Pages',
@@ -556,7 +556,7 @@ def map_plot(df):
     #unique_map_names = df['map_name'].unique()
     
     # Read the image file and encode it to base64
-    file_path = f'c:/Users/Administrator/capston/Maps/{map_name}.jpg'
+    file_path = f'Maps/{map_name}.jpg'###change path
    
 
     with open(file_path, 'rb') as image_file:
