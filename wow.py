@@ -25,7 +25,7 @@ uploaded_file = st.sidebar.file_uploader("Choose a file")
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
 else:
-    df = pd.read_csv('c:/Users/Administrator/capston/clean_data.csv')
+    df = pd.read_csv('clean_data.csv')
 
 ##layout
 options = st.sidebar.radio('Pages',
