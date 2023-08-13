@@ -11,8 +11,8 @@ from scipy.stats import gaussian_kde
 
 
 #set title
-st.title('Death Statistics in the WOW')
-st.text('Webapp by Team 12 Hardcore')
+st.title('Live to Win!')
+st.text('Analyzing Common Causes of Death within the World of Warcraft Hardcore Challenge')
 
 #displaying the image on streamlit app
 
