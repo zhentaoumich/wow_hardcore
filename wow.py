@@ -43,8 +43,8 @@ options = st.sidebar.radio('Pages',
                            options = ['Home',
                                       'Data Stats',
                                       'Data Header',
-                                      'Summary Plot',
-                                      'Top 10',
+                                      'Summary Plots',
+                                      'Top 3 Causes of Death by Class',
                                       'Deaths by Class & Level',
                                       'Pre Clustering Heatmap',
                                       'Clustering Heatmap'])
@@ -956,7 +956,7 @@ elif options == 'Data Header':
     abstract.empty()
     placeholder.empty()
     header(df)
-elif options == 'Summary Plot':
+elif options == 'Summary Plots':
     abstract.empty()
     placeholder.empty()
     race_summary_chart(df, race_colors)
@@ -964,7 +964,7 @@ elif options == 'Summary Plot':
     level_summary_chart(df)
     zone_summary_chart(df)
     
-elif options == 'Top 10':
+elif options == 'Top 3 Causes of Death by Class':
     abstract.empty()
     placeholder.empty()
     top_death_sources_by_class(df, class_colors, 3)   
