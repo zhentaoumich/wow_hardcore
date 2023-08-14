@@ -712,7 +712,7 @@ def create_pdf_line_chart(Main_df, map_path, map_name, class_colors):
         return 
 
     except Exception as e:
-        st.markdown("An error occurred:", str(e))
+        #st.markdown("An error occurred:", str(e))
         return None
 
 # @title Visual: create_class_table()
