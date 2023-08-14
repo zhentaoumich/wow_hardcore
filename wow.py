@@ -667,53 +667,53 @@ def create_pdf_line_chart(Main_df, map_path, map_name, class_colors):
     with Image.open(image_file.name) as img:
         image_width, image_height = img.size
 
-    #try:
+    try:
         # Create a line chart for the PDF of death level by class
-    line_chart_data = filtered_df.groupby(['class_name', 'level']).size().reset_index(name='count')
-    #line_chart_data['PDF'] = line_chart_data.groupby('class_name')['count'].apply(lambda x: x / x.sum() * 100)
-    line_chart_data['PDF'] = line_chart_data.groupby('class_name')['count'].transform(lambda x: x / x.sum() * 100)
-
-    # Smooth the PDF curves using KDE
-    kde_line_chart_data = pd.DataFrame()
-    for class_name, group in line_chart_data.groupby('class_name'):
-        kde = gaussian_kde(group['level'])
-        x_vals = np.linspace(group['level'].min(), group['level'].max(), num=100)
-        kde_vals = kde(x_vals)
-        kde_group = pd.DataFrame({'level': x_vals, 'PDF': kde_vals, 'class_name': class_name})
-        kde_line_chart_data = kde_line_chart_data._append(kde_group)
-
-    # Create line traces for each class
-    line_traces = []
-    for class_name, color in class_colors.items():
-        class_data = kde_line_chart_data[kde_line_chart_data['class_name'] == class_name]
-        line_trace = go.Scatter(
-            x=class_data['level'],
-            y=class_data['PDF'],
-            mode='lines',
-            name=class_name,
-            line=dict(color=color)
+        line_chart_data = filtered_df.groupby(['class_name', 'level']).size().reset_index(name='count')
+        #line_chart_data['PDF'] = line_chart_data.groupby('class_name')['count'].apply(lambda x: x / x.sum() * 100)
+        line_chart_data['PDF'] = line_chart_data.groupby('class_name')['count'].transform(lambda x: x / x.sum() * 100)
+    
+        # Smooth the PDF curves using KDE
+        kde_line_chart_data = pd.DataFrame()
+        for class_name, group in line_chart_data.groupby('class_name'):
+            kde = gaussian_kde(group['level'])
+            x_vals = np.linspace(group['level'].min(), group['level'].max(), num=100)
+            kde_vals = kde(x_vals)
+            kde_group = pd.DataFrame({'level': x_vals, 'PDF': kde_vals, 'class_name': class_name})
+            kde_line_chart_data = kde_line_chart_data._append(kde_group)
+    
+        # Create line traces for each class
+        line_traces = []
+        for class_name, color in class_colors.items():
+            class_data = kde_line_chart_data[kde_line_chart_data['class_name'] == class_name]
+            line_trace = go.Scatter(
+                x=class_data['level'],
+                y=class_data['PDF'],
+                mode='lines',
+                name=class_name,
+                line=dict(color=color)
+            )
+            line_traces.append(line_trace)
+    
+        # Create the line chart figure
+        line_chart_fig = go.Figure(data=line_traces)
+    
+        # Configure the layout for the line chart figure
+        line_chart_fig.update_layout(
+            xaxis=dict(title='Death Level'),
+            yaxis=dict(title='PDF'),
+            width=image_width,
+            height=image_height,
+            margin=dict(l=0, r=0, t=0, b=0)
         )
-        line_traces.append(line_trace)
+    
+        st.plotly_chart(line_chart_fig)
+            
+        return 
 
-    # Create the line chart figure
-    line_chart_fig = go.Figure(data=line_traces)
-
-    # Configure the layout for the line chart figure
-    line_chart_fig.update_layout(
-        xaxis=dict(title='Death Level'),
-        yaxis=dict(title='PDF'),
-        width=image_width,
-        height=image_height,
-        margin=dict(l=0, r=0, t=0, b=0)
-    )
-
-    st.plotly_chart(line_chart_fig)
-        
-    return 
-
-    #except Exception as e:
-        #print("An error occurred:", str(e))
-        #return None
+    except Exception as e:
+        print("An error occurred:", str(e))
+        return None
 
 # @title Visual: create_class_table()
 
